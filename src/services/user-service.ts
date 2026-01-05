@@ -1,30 +1,38 @@
 import bcrypt from "bcrypt";
-import * as userRepository from "../repositories/user-repository";
-import { badRequest, conflict } from "../errors";
+import { conflict, badRequest } from "../errors";
+import { createUser, findUserByEmail, findUserByUsername } from "../repositories/user-repository";
 
-export async function signupUser(data: {
+export async function createUserService({
+  email,
+  password,
+  username,
+  image
+}: {
   email: string;
-  username: string;
   password: string;
-  image?: string;
+  username: string;
+  image: string;
 }) {
-  const { email, username, password, image } = data;
-
-  if (!email || !username || !password) {
-    throw badRequest("Campos obrigatórios não preenchidos");
+  if (!email || !password || !username || !image) {
+    throw badRequest("Todos os campos são obrigatórios");
   }
 
-  const existingUser = await userRepository.findUserByEmail(email);
-  if (existingUser) {
+  const emailExists = await findUserByEmail(email);
+  if (emailExists) {
     throw conflict("Email já cadastrado");
+  }
+
+  const usernameExists = await findUserByUsername(username);
+  if (usernameExists) {
+    throw conflict("Username já está em uso");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await userRepository.createUser({
+  return await createUser({
     email,
-    username,
     password: hashedPassword,
-    image,
+    username,
+    image
   });
 }
