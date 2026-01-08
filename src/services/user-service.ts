@@ -1,12 +1,22 @@
 import bcrypt from "bcrypt";
-import { conflict, badRequest } from "../errors";
-import { createUser, findUserByEmail, findUserByUsername } from "../repositories/user-repository";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import { conflict, badRequest, notFound, unauthorizedError } from "../errors";
+import {
+  createUser,
+  findUserByEmail,
+  findUserByUsername,
+  verifyEmailRepository,
+} from "../repositories/user-repository";
+import { signInProtocol } from "protocols/index-protocol";
+
+dotenv.config();
 
 export async function createUserService({
   email,
   password,
   username,
-  image
+  image,
 }: {
   email: string;
   password: string;
@@ -33,6 +43,23 @@ export async function createUserService({
     email,
     password: hashedPassword,
     username,
-    image
+    image,
   });
+}
+
+export async function loginUserServices(req: signInProtocol) {
+  const foundEmail = await verifyEmailRepository(req.email);
+  if (!foundEmail) throw notFound("Email não encontrado.");
+  const token = jwt.sign(
+    {
+      userId: foundEmail.id,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: 86400 }
+  );
+
+  const checkPassword = bcrypt.compareSync(req.password, foundEmail.password);
+  if (!checkPassword) throw unauthorizedError("Senha incorreta.");
+
+  return token;
 }

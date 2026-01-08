@@ -2,16 +2,15 @@ import prisma from "../database";
 
 export function findUserByEmail(email: string) {
   return prisma.user.findUnique({
-    where: { email }
+    where: { email },
   });
 }
 
 export async function findUserByUsername(username: string) {
   return prisma.user.findUnique({
-    where: { username }
+    where: { username },
   });
 }
-
 
 export function createUser(data: {
   email: string;
@@ -20,6 +19,15 @@ export function createUser(data: {
   image: string;
 }) {
   return prisma.user.create({
-    data
+    data,
   });
+}
+
+export async function verifyEmailRepository(email: string) {
+  const result = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+  return result;
 }
