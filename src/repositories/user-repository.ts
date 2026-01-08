@@ -6,6 +6,13 @@ export function findUserByEmail(email: string) {
   });
 }
 
+export async function findUserByUsername(username: string) {
+  return prisma.user.findUnique({
+    where: { username }
+  });
+}
+
+
 export function createUser(data: {
   email: string;
   username: string;

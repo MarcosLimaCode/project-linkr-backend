@@ -19,6 +19,11 @@ export function errorHandler(
     return res.status(httpStatus.NOT_FOUND).send({ message: error.message });
   }
 
+  if (error.status) {
+  return res.status(error.status).send({ message: error.message });
+}
+
+
   console.error(error);
 
   return res
