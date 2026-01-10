@@ -7,3 +7,9 @@ export type signUpProtocol = {
 };
 
 export type signInProtocol = Omit<signUpProtocol, "id" | "username" | "image">;
+
+export type postProtocol = {
+  id: number;
+  link: string;
+  description: string;
+};
