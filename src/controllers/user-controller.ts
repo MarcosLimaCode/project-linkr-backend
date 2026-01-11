@@ -11,7 +11,7 @@ export async function signUp(req: Request, res: Response) {
 }
 
 export async function loginUser(req: Request, res: Response) {
-  const token = await loginUserServices(req.body);
-  res.status(200).send({ token });
+  const { token, image } = await loginUserServices(req.body);
+  res.status(200).send({ token, image });
   return;
 }

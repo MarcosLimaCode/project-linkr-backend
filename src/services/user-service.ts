@@ -61,5 +61,5 @@ export async function loginUserServices(req: signInProtocol) {
   const checkPassword = bcrypt.compareSync(req.password, foundEmail.password);
   if (!checkPassword) throw unauthorizedError("Senha incorreta.");
 
-  return token;
+  return { token, image: foundEmail.image };
 }
