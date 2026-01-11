@@ -11,7 +11,6 @@ export async function validateToken(
 ) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer", "").trim();
-
   if (!token) {
     res.sendStatus(401);
     return;
@@ -27,7 +26,6 @@ export async function validateToken(
         id: decoded.userId,
       },
     });
-
     if (!user) {
       res.sendStatus(401);
       return;
