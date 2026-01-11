@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 
-import { postProtocol } from "protocols/index-protocol";
-import { createPostRepository } from "repositories/post-repository";
+import { postProtocol } from "../protocols/index-protocol";
+import { createPostRepository } from "../repositories/post-repository";
 
 dotenv.config();
 

@@ -1,5 +1,9 @@
 import joi from "joi";
-import { signInProtocol, signUpProtocol } from "protocols/index-protocol";
+import {
+  postProtocol,
+  signInProtocol,
+  signUpProtocol,
+} from "protocols/index-protocol";
 
 export const signUpSchema = joi.object<signUpProtocol>({
   username: joi.string().required().invalid(null),
@@ -11,4 +15,9 @@ export const signUpSchema = joi.object<signUpProtocol>({
 export const loginSchema = joi.object<signInProtocol>({
   email: joi.string().required().email().invalid(null),
   password: joi.string().required().min(6),
+});
+
+export const postSchema = joi.object<postProtocol>({
+  link: joi.string().required().uri(),
+  description: joi.string(),
 });
