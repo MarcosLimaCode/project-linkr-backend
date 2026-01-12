@@ -12,29 +12,23 @@ export async function validateToken(
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer", "").trim();
   if (!token) {
-    res.sendStatus(401);
-    return;
+    return res.sendStatus(401);
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
-      userId: number;
-    };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) as { userId: number };
 
     const user = await prisma.user.findFirst({
-      where: {
-        id: decoded.userId,
-      },
+      where: { id: decoded.userId },
     });
+
     if (!user) {
-      res.sendStatus(401);
-      return;
+      return res.sendStatus(401);
     }
 
-    res.locals.user = user.id;
-    return next();
+    res.locals.userId = user.id;
+    next();
   } catch (error) {
-    res.sendStatus(500);
-    return;
+    return res.sendStatus(500);
   }
 }

@@ -9,6 +9,7 @@ import {
 import { createPost } from "../controllers/post-controller";
 import { validateToken } from "../middlewares/auth-middleware";
 import { getFeed } from "../controllers/feed-controller";
+import { handleLike } from "../controllers/like-controller";
 
 const userRouter = Router();
 
@@ -16,5 +17,6 @@ userRouter.post("/", validateSchema(loginSchema), loginUser);
 userRouter.post("/sign-up", validateSchema(signUpSchema), signUp);
 userRouter.post("/feed", validateToken, validateSchema(postSchema), createPost);
 userRouter.get("/feed", getFeed);
+userRouter.post("/:postId", validateToken, handleLike);
 
 export default userRouter;

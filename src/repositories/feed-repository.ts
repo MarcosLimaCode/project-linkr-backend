@@ -1,11 +1,9 @@
 import prisma from "../database";
 
-export async function getFeed() {
+export async function getFeed(userId: number) {
   return prisma.post.findMany({
     take: 20,
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: { createdAt: "desc" },
     include: {
       user: {
         select: {
@@ -15,10 +13,9 @@ export async function getFeed() {
         },
       },
       likes: {
-        select: {
-          userId: true,
-        },
+        select: { userId: true },
       },
     },
   });
 }
+

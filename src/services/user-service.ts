@@ -47,19 +47,22 @@ export async function createUserService({
   });
 }
 
+
 export async function loginUserServices(req: signInProtocol) {
   const foundEmail = await verifyEmailRepository(req.email);
   if (!foundEmail) throw notFound("Email não encontrado.");
+
+  const password = req.password.trim();
+
+  const checkPassword = bcrypt.compareSync(password, foundEmail.password);
+  if (!checkPassword) throw unauthorizedError("Senha incorreta.");
+
   const token = jwt.sign(
-    {
-      userId: foundEmail.id,
-    },
+    { userId: foundEmail.id },
     process.env.JWT_SECRET,
     { expiresIn: 86400 }
   );
 
-  const checkPassword = bcrypt.compareSync(req.password, foundEmail.password);
-  if (!checkPassword) throw unauthorizedError("Senha incorreta.");
-
   return token;
 }
+
