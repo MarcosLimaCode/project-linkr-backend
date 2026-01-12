@@ -21,3 +21,4 @@ export const postSchema = joi.object<postProtocol>({
   link: joi.string().required().uri(),
   description: joi.string(),
 });
+
