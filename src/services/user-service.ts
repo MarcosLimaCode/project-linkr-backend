@@ -63,6 +63,9 @@ export async function loginUserServices(req: signInProtocol) {
     { expiresIn: 86400 }
   );
 
+  const checkPassword = bcrypt.compareSync(req.password, foundEmail.password);
+  if (!checkPassword) throw unauthorizedError("Senha incorreta.");
+
   return token;
 }
 
