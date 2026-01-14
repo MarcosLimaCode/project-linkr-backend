@@ -12,4 +12,5 @@ export type postProtocol = {
   id: number;
   link: string;
   description: string;
+  userId: number;
 };
