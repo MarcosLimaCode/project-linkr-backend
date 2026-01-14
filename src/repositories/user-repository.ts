@@ -1,18 +1,24 @@
 import prisma from "../database";
 
-export function findUserByEmail(email: string) {
+export function findUserByEmailRepository(email: string) {
   return prisma.user.findUnique({
     where: { email },
   });
 }
 
-export async function findUserByUsername(username: string) {
+export function findUserByIdRepository(id: number) {
+  return prisma.user.findUnique({
+    where: { id },
+  });
+}
+
+export async function findUserByUsernameRepository(username: string) {
   return prisma.user.findUnique({
     where: { username },
   });
 }
 
-export function createUser(data: {
+export function createUserRepository(data: {
   email: string;
   username: string;
   password: string;

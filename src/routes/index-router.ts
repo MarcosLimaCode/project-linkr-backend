@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, signUp } from "../controllers/user-controller";
+import { findUser, loginUser, signUp } from "../controllers/user-controller";
 import { validateSchema } from "../middlewares/schema-middleware";
 import {
   loginSchema,
@@ -15,6 +15,8 @@ const userRouter = Router();
 
 userRouter.post("/", validateSchema(loginSchema), loginUser);
 userRouter.post("/sign-up", validateSchema(signUpSchema), signUp);
+userRouter.get("/user/:id", findUser);
+
 userRouter.post("/feed", validateToken, validateSchema(postSchema), createPost);
 userRouter.get("/feed", getFeed);
 userRouter.post("/:postId", validateToken, handleLike);

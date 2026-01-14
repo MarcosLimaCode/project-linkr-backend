@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { createUserService, loginUserServices } from "../services/user-service";
-import { findUserByEmail } from "../repositories/user-repository";
+import {
+  createUserService,
+  findUserService,
+  loginUserServices,
+} from "../services/user-service";
 
 export async function signUp(req: Request, res: Response) {
   const { email, password, username, image } = req.body;
@@ -12,13 +15,16 @@ export async function signUp(req: Request, res: Response) {
 }
 
 export async function loginUser(req: Request, res: Response) {
-  try {
-    const token = await loginUserServices(req.body);
+  const { token, image, user } = await loginUserServices(req.body);
+  res.status(httpStatus.OK).send({ token, image, user });
+  return;
+}
 
-    const user = await findUserByEmail(req.body.email);
+export async function findUser(req: Request, res: Response) {
+  // Adicionar logica para retornar informações do usuário de acordo com o Id enviado por parametro.
+  // Observando o que o Frontend precisa. Mas a base está realizada.
 
-    res.status(httpStatus.OK).send({ token, user });
-  } catch (error: any) {
-    res.status(httpStatus.BAD_REQUEST).send({ message: error.message });
-  }
+  const id = Number(req.params.id);
+  const result = await findUserService(id);
+  return res.status(httpStatus.OK).send(result);
 }
