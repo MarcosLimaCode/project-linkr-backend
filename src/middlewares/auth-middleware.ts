@@ -16,7 +16,9 @@ export async function validateToken(
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET) as { userId: number };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) as {
+      userId: number;
+    };
 
     const user = await prisma.user.findFirst({
       where: { id: decoded.userId },
@@ -29,6 +31,6 @@ export async function validateToken(
     res.locals.userId = user.id;
     next();
   } catch (error) {
-    return res.sendStatus(500);
+    return res.sendStatus(401);
   }
 }

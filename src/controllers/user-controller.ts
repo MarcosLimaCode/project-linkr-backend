@@ -15,16 +15,24 @@ export async function signUp(req: Request, res: Response) {
 }
 
 export async function loginUser(req: Request, res: Response) {
-  const { token, image, user } = await loginUserServices(req.body);
-  res.status(httpStatus.OK).send({ token, image, user });
+  const { token, image } = await loginUserServices(req.body);
+  res.status(httpStatus.OK).send({ token, image });
   return;
 }
 
 export async function findUser(req: Request, res: Response) {
   // Adicionar logica para retornar informações do usuário de acordo com o Id enviado por parametro.
-  // Observando o que o Frontend precisa. Mas a base está realizada.
+  // Observar o que o Frontend precisa. Mas a base está realizada.
 
   const id = Number(req.params.id);
+  const result = await findUserService(id);
+  return res.status(httpStatus.OK).send(result);
+}
+
+export async function getMyProfile(req: Request, res: Response) {
+  // Observar o que o Frontend precisa. Mas a base está realizada.
+
+  const id = Number(res.locals.userId);
   const result = await findUserService(id);
   return res.status(httpStatus.OK).send(result);
 }
