@@ -11,3 +11,21 @@ export async function createPostRepository(req: postProtocol, userId: number) {
   });
   return result;
 }
+
+export async function verifyIdRepository(id: number) {
+  const result = await prisma.post.findFirst({
+    where: {
+      id,
+    },
+  });
+  return result;
+}
+
+export async function deletePostRepository(id: number) {
+  const result = await prisma.post.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+}
