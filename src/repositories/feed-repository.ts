@@ -19,3 +19,14 @@ export async function getFeed(userId: number) {
   });
 }
 
+export async function getSuggestions(userId: number) {
+  return prisma.user.findMany({
+    take: 10,
+    orderBy: { id: "desc" },
+    where: {
+      NOT: {
+        id: userId,
+      },
+    },
+  });
+}
