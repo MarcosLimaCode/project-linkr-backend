@@ -13,3 +13,8 @@ export async function getFeed(userId: number) {
     };
   });
 }
+
+export async function getSuggestions(userId: number) {
+  const suggestions = await feedRepository.getSuggestions(userId);
+  return suggestions;
+}

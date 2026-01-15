@@ -6,3 +6,9 @@ export async function getFeed(req: Request, res: Response) {
   const feed = await feedService.getFeed(userId);
   res.status(200).send(feed);
 }
+
+export async function getSuggestions(req: Request, res: Response) {
+  const userId = res.locals.userId;
+  const suggestions = await feedService.getSuggestions(userId);
+  res.status(200).send(suggestions);
+}
