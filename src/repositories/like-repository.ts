@@ -1,19 +1,25 @@
 import prisma from "../database";
 
-export function findLike(userId: number, postId: number) {
+export function findLike(postId: number, userId: number) {
   return prisma.like.findFirst({
     where: { userId, postId },
   });
 }
 
-export function createLike(userId: number, postId: number) {
+export function createLike(postId: number, userId: number) {
   return prisma.like.create({
     data: { userId, postId },
   });
 }
 
-export function deleteLike(userId: number, postId: number) {
+export function deleteLike(likeId) {
   return prisma.like.deleteMany({
-    where: { userId, postId },
+    where: { id: likeId },
+  });
+}
+
+export function countLikes(postId: number) {
+  return prisma.like.count({
+    where: { postId },
   });
 }

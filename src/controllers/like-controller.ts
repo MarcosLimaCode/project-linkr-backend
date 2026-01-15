@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-import * as likeService from "../services/like-service";
+import { toggleLikeService } from "../services/like-service";
 
-export async function handleLike(req: Request, res: Response) {
-  const userId = res.locals.user;
-  const postId = Number(req.params.postId);
+export async function toggleLike(req: Request, res: Response) {
+  const postId = Number(req.params.id);
+  const userId = res.locals.userId;
 
-  try {
-    const result = await likeService.toggleLike(userId, postId);
-    res.status(200).send(result); 
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
+  if (!postId) {
+    return res.sendStatus(400);
   }
+
+  const result = await toggleLikeService(postId, userId);
+
+  return res.status(200).send(result);
 }

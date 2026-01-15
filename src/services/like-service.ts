@@ -1,13 +1,23 @@
-import * as likeRepository from "../repositories/like-repository";
+import {
+  countLikes,
+  createLike,
+  deleteLike,
+  findLike,
+} from "../repositories/like-repository";
 
-export async function toggleLike(userId: number, postId: number) {
-  const existingLike = await likeRepository.findLike(userId, postId);
+export async function toggleLikeService(postId: number, userId: number) {
+  const like = await findLike(postId, userId);
 
-  if (existingLike) {
-    await likeRepository.deleteLike(userId, postId);
-    return { liked: false };
+  if (like) {
+    await deleteLike(like.id);
   } else {
-    await likeRepository.createLike(userId, postId);
-    return { liked: true };
+    await createLike(postId, userId);
   }
+
+  const likesCount = await countLikes(postId);
+
+  return {
+    liked: !like,
+    likesCount,
+  };
 }
