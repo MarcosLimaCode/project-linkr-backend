@@ -14,7 +14,7 @@ import {
 import { createPost, deletePost } from "../controllers/post-controller";
 import { validateToken } from "../middlewares/auth-middleware";
 import { getFeed } from "../controllers/feed-controller";
-import { handleLike } from "../controllers/like-controller";
+import { toggleLike } from "../controllers/like-controller";
 
 const userRouter = Router();
 
@@ -23,10 +23,10 @@ userRouter.get("/user/:id", findUser);
 userRouter.post("/", validateSchema(loginSchema), loginUser);
 userRouter.post("/sign-up", validateSchema(signUpSchema), signUp);
 
-userRouter.get("/feed", getFeed);
+userRouter.get("/feed", validateToken, getFeed);
 userRouter.post("/feed", validateToken, validateSchema(postSchema), createPost);
 
-userRouter.post("/post/:id", validateToken, handleLike);
+userRouter.post("/post/:id/like", validateToken, toggleLike);
 userRouter.delete("/post/:id", validateToken, deletePost);
 
 export default userRouter;
