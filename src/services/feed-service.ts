@@ -1,7 +1,7 @@
 import * as feedRepository from "../repositories/feed-repository";
 
 export async function getFeed(userId: number) {
-  const posts = await feedRepository.getFeed(userId);
+  const posts = await feedRepository.getFeedWithMetadata(userId);
 
   return posts.map((post) => {
     const liked = post.likes.some((like) => like.userId === userId);
