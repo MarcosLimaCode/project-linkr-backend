@@ -45,12 +45,10 @@ export async function getFeedWithMetadata(userId: number) {
   const postsWithMetadata = await Promise.all(
     posts.map(async (post) => {
       let metadata: Metadata = {
-        title: "Título Indisponível",
-        description: "Descrição Indisponível",
-        images: [
-          "https://img.freepik.com/vetores-premium/pagina-nao-encontrada-ilustracao-do-conceito_114360-1869.jpg",
-        ],
-        url: post.link || "",
+        title: "",
+        description: "",
+        images: [""],
+        url: post.link,
       };
 
       if (post.link) {
@@ -58,15 +56,22 @@ export async function getFeedWithMetadata(userId: number) {
           const url: Record<string, any> = await getLinkPreview(post.link);
 
           metadata = {
-            title: url.title || url["og:title"] || "Título Indisponível",
-            description: url.description || url["og:description"] || post.link,
+            title: url.title,
+            description: url.description,
             images:
               url.images ||
               "https://img.freepik.com/vetores-premium/pagina-nao-encontrada-ilustracao-do-conceito_114360-1869.jpg",
             url: post.link,
           };
         } catch (err) {
-          console.error(`Erro ao buscar metadata do post ${post.id}:`, err);
+          metadata = {
+            title: "Título Indisponível",
+            description: "Descrição Indisponível",
+            images: [
+              "https://img.freepik.com/vetores-premium/pagina-nao-encontrada-ilustracao-do-conceito_114360-1869.jpg",
+            ],
+            url: post.link,
+          };
         }
       }
 
