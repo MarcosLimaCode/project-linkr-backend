@@ -29,3 +29,15 @@ export async function deletePostRepository(id: number) {
   });
   return result;
 }
+
+export function updatePostRepository(req: postProtocol, id: number) {
+  return prisma.post.update({
+    where: {
+      id: id,
+    },
+    data: {
+      link: req.link,
+      description: req.description,
+    },
+  });
+}
