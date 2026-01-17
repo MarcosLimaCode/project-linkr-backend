@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 import {
   createPostServices,
   deletePostServices,
+  updatePostService,
 } from "../services/post-service";
 
 export async function createPost(req: Request, res: Response) {
@@ -16,4 +17,10 @@ export async function deletePost(req: Request, res: Response) {
   await deletePostServices(id);
   res.sendStatus(204);
   return;
+}
+
+export async function updatePost(req: Request, res: Response) {
+  const id = Number(req.params.id);
+  const result = await updatePostService(req.body, id);
+  return res.status(httpStatus.OK).send(result);
 }
