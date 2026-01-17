@@ -22,12 +22,16 @@ export async function verifyIdRepository(id: number) {
 }
 
 export async function deletePostRepository(id: number) {
-  const result = await prisma.post.delete({
+  await prisma.like.deleteMany({
+    where: {
+      postId: id,
+    },
+  });
+  return await prisma.post.delete({
     where: {
       id,
     },
   });
-  return result;
 }
 
 export function updatePostRepository(req: postProtocol, id: number) {
