@@ -11,7 +11,11 @@ import {
   postSchema,
   signUpSchema,
 } from "../schemas/index-schemas";
-import { createPost, deletePost } from "../controllers/post-controller";
+import {
+  createPost,
+  deletePost,
+  updatePost,
+} from "../controllers/post-controller";
 import { validateToken } from "../middlewares/auth-middleware";
 import { getFeed, getSuggestions } from "../controllers/feed-controller";
 import { toggleLike } from "../controllers/like-controller";
@@ -28,6 +32,12 @@ userRouter.get("/suggestions", validateToken, getSuggestions);
 userRouter.post("/feed", validateToken, validateSchema(postSchema), createPost);
 
 userRouter.post("/post/:id/like", validateToken, toggleLike);
+userRouter.put(
+  "/post/:id",
+  validateToken,
+  validateSchema(postSchema),
+  updatePost
+);
 userRouter.delete("/post/:id", validateToken, deletePost);
 
 export default userRouter;
