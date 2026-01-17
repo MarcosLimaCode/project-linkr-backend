@@ -16,3 +16,20 @@ export async function loginUser(req: Request, res: Response) {
   res.status(200).send({ token });
   return;
 }
+
+export async function findUser(req: Request, res: Response) {
+  // Adicionar logica para retornar informações do usuário de acordo com o Id enviado por parametro.
+  // Observar o que o Frontend precisa. Mas a base está realizada.
+
+  const id = Number(req.params.id);
+  const result = await findUserService(id);
+  return res.status(httpStatus.OK).send(result);
+}
+
+export async function getMyProfile(req: Request, res: Response) {
+  // Observar o que o Frontend precisa. Mas a base está realizada.
+
+  const id = Number(res.locals.userId);
+  const result = await findUserService(id);
+  return res.status(httpStatus.OK).send(result);
+}

@@ -29,7 +29,9 @@
     "http-status": "^2.1.0",
     "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
-    "prisma": "^6.19.1"
+    "link-preview-js": "^4.0.0",
+    "prisma": "^6.19.1",
+    "url-metadata": "^5.4.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
