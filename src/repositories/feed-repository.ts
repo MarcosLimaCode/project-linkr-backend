@@ -45,10 +45,12 @@ export async function getFeedWithMetadata(userId: number) {
   const postsWithMetadata = await Promise.all(
     posts.map(async (post) => {
       let metadata: Metadata = {
-        title: "",
-        description: "",
-        images: [""],
-        url: post.link,
+        title: "Título Indisponível",
+        description: "Descrição Indisponível",
+        images: [
+          "https://img.freepik.com/vetores-premium/pagina-nao-encontrada-ilustracao-do-conceito_114360-1869.jpg",
+        ],
+        url: post.link || "",
       };
 
       if (post.link) {
