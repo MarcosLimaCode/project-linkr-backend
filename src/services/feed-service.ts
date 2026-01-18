@@ -5,7 +5,6 @@ export async function getFeed(userId: number) {
 
   return posts.map((post) => {
     const liked = post.likes.some((like) => like.userId === userId);
-
     return {
       ...post,
       likesCount: post.likes.length,

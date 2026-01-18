@@ -1,6 +1,5 @@
 import { Router } from "express";
 import {
-  findUser,
   getMyProfile,
   loginUser,
   signUp,
@@ -23,7 +22,6 @@ import { toggleLike } from "../controllers/like-controller";
 const userRouter = Router();
 
 userRouter.get("/user/my-profile", validateToken, getMyProfile);
-userRouter.get("/user/:id", findUser);
 userRouter.post("/", validateSchema(loginSchema), loginUser);
 userRouter.post("/sign-up", validateSchema(signUpSchema), signUp);
 

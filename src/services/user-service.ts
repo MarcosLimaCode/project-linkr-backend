@@ -62,12 +62,12 @@ export async function loginUserServices(req: signInProtocol) {
   const checkPassword = bcrypt.compareSync(req.password, user.password);
   if (!checkPassword) throw unauthorizedError("Senha incorreta.");
 
-  return { token, image: user.image, user };
+  return { token, image: user.image };
 }
 
 export async function findUserService(id: number) {
   const user = await findUserByIdRepository(id);
   if (!user) throw notFound("Usuário não encontrado.");
 
-  return { user };
+  return user;
 }
