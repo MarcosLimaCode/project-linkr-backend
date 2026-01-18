@@ -12,7 +12,3 @@ export async function getSuggestions(req: Request, res: Response) {
   const suggestions = await feedService.getSuggestions(userId);
   res.status(200).send(suggestions);
 }
-
-export async function getSuggestion(req: Request, res: Response) {
-  //teste
-}
