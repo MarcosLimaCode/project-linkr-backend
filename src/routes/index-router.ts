@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   getMyProfile,
+  getProfile,
   loginUser,
   signUp,
 } from "../controllers/user-controller";
@@ -22,6 +23,8 @@ import { toggleLike } from "../controllers/like-controller";
 const userRouter = Router();
 
 userRouter.get("/user/my-profile", validateToken, getMyProfile);
+userRouter.get("/user/:id", validateToken, getProfile);
+
 userRouter.post("/", validateSchema(loginSchema), loginUser);
 userRouter.post("/sign-up", validateSchema(signUpSchema), signUp);
 
