@@ -37,3 +37,18 @@ export async function verifyEmailRepository(email: string) {
   });
   return result;
 }
+
+export async function updateUserRepository(
+  userId: number,
+  data: {
+    username?: string;
+    age?: number | null;
+    image?: string;
+    about?: string | null;
+  }
+) {
+  return prisma.user.update({
+    where: { id: userId },
+    data,
+  });
+}

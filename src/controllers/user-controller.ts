@@ -4,6 +4,7 @@ import {
   createUserService,
   findUserService,
   loginUserServices,
+  updateMyProfileService,
 } from "../services/user-service";
 
 export async function signUp(req: Request, res: Response) {
@@ -26,6 +27,21 @@ export async function getMyProfile(req: Request, res: Response) {
 
   return res.status(httpStatus.OK).send(result);
 }
+
+export async function updateMyProfile(req: Request, res: Response) {
+  const id = Number(res.locals.userId);
+  const { username, age, image, about } = req.body;
+
+  await updateMyProfileService(id, {
+    username,
+    age,
+    image,
+    about,
+  });
+
+  return res.sendStatus(httpStatus.OK);
+}
+
 
 export async function getProfile(req: Request, res: Response) {
   const id = Number(req.params.id);
