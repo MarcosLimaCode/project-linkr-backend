@@ -1,9 +1,14 @@
 import { getLinkPreview } from "link-preview-js";
 import prisma from "../database";
 
-export async function getFeedRepository(userId: number) {
+export async function getFeedRepository(
+  userId: number,
+  limit: number,
+  offset: number
+) {
   return prisma.post.findMany({
-    take: 20,
+    take: limit,
+    skip: offset,
     orderBy: { createdAt: "desc" },
     include: {
       user: {
@@ -19,6 +24,7 @@ export async function getFeedRepository(userId: number) {
     },
   });
 }
+
 
 export async function getSuggestions(userId: number) {
   return prisma.user.findMany({
