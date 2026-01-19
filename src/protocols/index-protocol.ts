@@ -12,5 +12,15 @@ export type postProtocol = {
   id: number;
   link: string;
   description: string;
+  preview_description: string;
+  preview_image: string;
+  preview_title: string;
   userId: number;
+};
+
+export type postData = {
+  title: string;
+  description: string;
+  images: [string];
+  url: string;
 };
