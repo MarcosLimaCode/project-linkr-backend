@@ -26,3 +26,9 @@ export async function getMyProfile(req: Request, res: Response) {
 
   return res.status(httpStatus.OK).send(result);
 }
+
+export async function getProfile(req: Request, res: Response) {
+  const id = Number(req.params.id);
+  const result = await findUserService(id);
+  return res.status(httpStatus.OK).send(result);
+}
