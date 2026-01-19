@@ -1,12 +1,19 @@
-import { postProtocol } from "protocols/index-protocol";
+import { postData, postProtocol } from "protocols/index-protocol";
 import prisma from "../database";
 
-export async function createPostRepository(req: postProtocol, userId: number) {
+export async function createPostRepository(
+  req: postProtocol,
+  userId: number,
+  url: postData
+) {
   const result = await prisma.post.create({
     data: {
       link: req.link,
       description: req.description,
       userId: userId,
+      preview_description: url.description,
+      preview_image: url.images[0],
+      preview_title: url.title,
     },
   });
   return result;

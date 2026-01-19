@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-import { postProtocol } from "../protocols/index-protocol";
+import { postData, postProtocol } from "../protocols/index-protocol";
 import {
   createPostRepository,
   deletePostRepository,
@@ -8,11 +8,14 @@ import {
   verifyIdRepository,
 } from "../repositories/post-repository";
 import { badRequest, notFound } from "../errors";
+import { getLinkPreview } from "link-preview-js";
 
 dotenv.config();
 
 export async function createPostServices(req: postProtocol, userId: number) {
-  return await createPostRepository(req, userId);
+  const url: any = await getLinkPreview(req.link);
+
+  return await createPostRepository(req, userId, url);
 }
 
 export async function deletePostServices(id: number) {
