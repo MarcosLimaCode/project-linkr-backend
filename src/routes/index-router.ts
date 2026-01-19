@@ -4,6 +4,7 @@ import {
   getProfile,
   loginUser,
   signUp,
+  updateMyProfile,
 } from "../controllers/user-controller";
 import { validateSchema } from "../middlewares/schema-middleware";
 import {
@@ -23,6 +24,7 @@ import { toggleLike } from "../controllers/like-controller";
 const userRouter = Router();
 
 userRouter.get("/user/my-profile", validateToken, getMyProfile);
+userRouter.put("/user/my-profile", validateToken, updateMyProfile);
 userRouter.get("/user/:id", validateToken, getProfile);
 
 userRouter.post("/", validateSchema(loginSchema), loginUser);

@@ -7,6 +7,7 @@ import {
   findUserByEmailRepository,
   findUserByIdRepository,
   findUserByUsernameRepository,
+  updateUserRepository,
   verifyEmailRepository,
 } from "../repositories/user-repository";
 import { signInProtocol } from "protocols/index-protocol";
@@ -70,4 +71,20 @@ export async function findUserService(id: number) {
   if (!user) throw notFound("Usuário não encontrado.");
 
   return user;
+}
+
+export async function updateMyProfileService(
+  userId: number,
+  data: {
+    username?: string;
+    age?: number | null;
+    image?: string;
+    about?: string | null;
+  }
+) {
+  if (!userId) {
+    throw unauthorizedError("Usuário não autenticado.");
+  }
+
+  await updateUserRepository(userId, data);
 }
